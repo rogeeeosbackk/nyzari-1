@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ShoppingBag, Minus, Plus, X, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Minus, Plus, X } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -19,21 +19,37 @@ const GOOGLE_FORM_ENTRY_IDS = {
   city: "entry.528762314",
   postalCode: "entry.452850288",
   notes: "entry.288149772",
-  products: "entry.888888888", // Add a products question in your Google Form to collect cart items
+  products: "entry.888888888",
 };
+
+// Extend CartItem with id
+export interface CartItemWithId extends CartItem {
+  id: string;
+  image?: string;
+  category?: string;
+}
 
 const Cart: React.FC = () => {
   const { items, total, itemCount, removeFromCart, updateQuantity, clearCart } = useCart();
   const { toast } = useToast();
+
   const [showCustomerForm, setShowCustomerForm] = useState(false);
   const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
   const [customerName, setCustomerName] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItemWithId[]>([]);
+  const hiddenFormRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
-    setCartItems(items);
+    setCartItems(items.map((i) => ({ ...i, id: i.id || i.name })));
   }, [items]);
+
+  // Open WhatsApp modal when customerName is set
+  useEffect(() => {
+    if (customerName) {
+      setShowWhatsAppModal(true);
+    }
+  }, [customerName]);
 
   const handleProceedToCheckout = () => {
     if (items.length === 0) return;
@@ -44,39 +60,35 @@ const Cart: React.FC = () => {
     setIsProcessing(true);
 
     try {
-      // Prepare form data for Google Forms
-      const formDataToSend = new FormData();
-      Object.keys(GOOGLE_FORM_ENTRY_IDS).forEach(key => {
-        if (key !== "products") {
-          const value = customerData[key as keyof CustomerData] ?? "";
-          formDataToSend.append(GOOGLE_FORM_ENTRY_IDS[key as keyof typeof GOOGLE_FORM_ENTRY_IDS], value);
-        }
-      });
+      const productsString = cartItems
+        .map((i) => `${i.name} x${i.quantity}`)
+        .join(', ');
 
-      // Append cart items as a single string
-      const productsString = cartItems.map(i => `${i.name} x${i.quantity}`).join(", ");
-      formDataToSend.append(GOOGLE_FORM_ENTRY_IDS.products, productsString);
+      // Fill hidden Google Form
+      if (hiddenFormRef.current) {
+        const form = hiddenFormRef.current;
+        (Object.keys(GOOGLE_FORM_ENTRY_IDS) as (keyof typeof GOOGLE_FORM_ENTRY_IDS)[]).forEach(
+          (key) => {
+            const input = form.elements.namedItem(
+              GOOGLE_FORM_ENTRY_IDS[key]
+            ) as HTMLInputElement;
+            if (input) {
+              input.value = key === "products" ? productsString : (customerData as any)[key] ?? "";
+            }
+          }
+        );
+        form.submit();
+      }
 
-      // Send data to Google Forms
-      await fetch(GOOGLE_FORM_ACTION_URL, {
-        method: "POST",
-        mode: "no-cors", // Google Forms requires no-cors mode
-        body: formDataToSend,
-      }).catch(err => console.error("Google Form submit error:", err));
-
-      // Show toast success
       toast({
         title: "Order Submitted",
         description: "Your order has been successfully sent!",
         variant: "default",
       });
 
-      // Update state
-      setCustomerName(customerData.name);
+      // Close form, clear cart, and trigger WhatsApp modal
       setShowCustomerForm(false);
-      setShowWhatsAppModal(true);
-
-      // Clear cart
+      setCustomerName(customerData.name); // WhatsApp modal will open via useEffect
       clearCart();
     } catch (err) {
       console.error(err);
@@ -116,7 +128,7 @@ const Cart: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-6">
-            {items.map((item, index) => (
+            {cartItems.map((item, index) => (
               <motion.div
                 key={item.id}
                 className="card-luxury p-6"
@@ -125,16 +137,16 @@ const Cart: React.FC = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <div className="flex flex-col md:flex-row gap-6">
-                  {/* Product Image */}
                   <div className="w-full md:w-32 h-48 md:h-32 rounded-lg overflow-hidden bg-gray-50">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover"
-                    />
+                    {item.image && (
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
 
-                  {/* Product Details */}
                   <div className="flex-grow">
                     <div className="flex justify-between items-start mb-2">
                       <div>
@@ -153,7 +165,6 @@ const Cart: React.FC = () => {
                       </Button>
                     </div>
 
-                    {/* Quantity Controls */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <Button
@@ -200,10 +211,9 @@ const Cart: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {/* Summary Card */}
             <div className="card-luxury p-6 sticky top-24">
               <h3 className="text-xl font-semibold mb-6">Order Summary</h3>
-              
+
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between">
                   <span>Subtotal ({itemCount} items)</span>
@@ -234,34 +244,18 @@ const Cart: React.FC = () => {
                 >
                   Proceed to Checkout
                 </Button>
-                
+
                 <Link to="/shop" className="block">
                   <Button variant="outline" className="w-full btn-outline-luxury">
                     Continue Shopping
                   </Button>
                 </Link>
               </div>
-
-              {/* Security Features */}
-              <div className="mt-6 pt-6 border-t space-y-2 text-sm text-muted-foreground">
-                <div className="flex items-center space-x-2">
-                  <span>🔒</span>
-                  <span>Secure checkout</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span>🚚</span>
-                  <span>Free shipping worldwide</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span>↩️</span>
-                  <span>30-day returns</span>
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Customer Information Modal */}
+        {/* Customer Form Modal */}
         {showCustomerForm && (
           <motion.div
             className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
@@ -301,12 +295,26 @@ const Cart: React.FC = () => {
           </motion.div>
         )}
 
-        {/* WhatsApp Contact Modal */}
+        {/* WhatsApp Modal */}
         <WhatsAppModal
           isOpen={showWhatsAppModal}
           onClose={handleWhatsAppModalClose}
           customerName={customerName}
         />
+
+        {/* 🔒 Hidden Google Form */}
+        <form
+          ref={hiddenFormRef}
+          action={GOOGLE_FORM_ACTION_URL}
+          method="POST"
+          target="hidden_iframe"
+          className="hidden"
+        >
+          {Object.values(GOOGLE_FORM_ENTRY_IDS).map((id) => (
+            <input key={id} type="hidden" name={id} defaultValue="" />
+          ))}
+          <iframe name="hidden_iframe" style={{ display: "none" }} />
+        </form>
       </div>
     </div>
   );
