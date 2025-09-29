@@ -41,7 +41,7 @@ const Admin: React.FC = () => {
 
   const handleLogin = () => {
     // Simple password check - in real app, this would be more secure
-    if (password === 'admin123') {
+    if (password === 'NyraZari@2155') {
       setIsAuthenticated(true);
       localStorage.setItem('nyrazari-admin', 'authenticated');
       toast({
