@@ -99,8 +99,8 @@ const Contact: React.FC = () => {
                   <Phone className="h-6 w-6 text-primary mt-1" />
                   <div>
                     <h3 className="font-medium mb-1">Phone</h3>
-                    <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                    <p className="text-muted-foreground">+1 (555) 987-6543</p>
+                    <p className="text-muted-foreground">+91 1234567890</p>
+                    <p className="text-muted-foreground">+91 1234567890</p>
                   </div>
                 </div>
 
@@ -109,9 +109,9 @@ const Contact: React.FC = () => {
                   <div>
                     <h3 className="font-medium mb-1">Address</h3>
                     <p className="text-muted-foreground">
-                      123 Luxury Lane<br />
-                      New York, NY 10001<br />
-                      United States
+                      Kannur<br />
+                      Kerala<br />
+                      India
                     </p>
                   </div>
                 </div>
@@ -123,7 +123,7 @@ const Contact: React.FC = () => {
                     <p className="text-muted-foreground">
                       Monday - Friday: 9:00 AM - 6:00 PM<br />
                       Saturday: 10:00 AM - 4:00 PM<br />
-                      Sunday: Closed
+                      Sunday: 10:00 AM - 6:00
                     </p>
                   </div>
                 </div>

@@ -17,8 +17,14 @@ const About: React.FC = () => {
             Our <span className="text-luxury">Story</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            For over three decades, Nyrazari has been crafting exquisite jewelry that celebrates 
-            life's most precious moments with unparalleled artistry and elegance.
+          Nyrazari began just two years ago with a sparkle of excitement and a love for all
+          things cute and charming.We wanted to bring accessories that make everyday outfits
+          feel magical—tiny treasures that lift your mood and show off your personality.From
+          delicate earrings to  charms, every piece is carefully picked to spread joy
+          and celebrate you.What started as a small re-selling shop has become a happy little
+          world of sparkle seekers who believe that great style doesn’t have to be complicated.
+          At Nyrazari, we’re not just selling jewelry—we’re sharing smiles, one adorable 
+          accessory at a time.
           </p>
         </motion.div>
 
@@ -36,10 +42,10 @@ const About: React.FC = () => {
                 A Legacy of <span className="text-luxury">Excellence</span>
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Founded in 1990 by master jeweler Alessandro Nyrazari, our atelier began as a 
-                small workshop in the heart of New York's Diamond District. What started as 
-                one man's passion for creating extraordinary pieces has grown into a globally 
-                recognized brand synonymous with luxury and craftsmanship.
+                 Though Nyrazari is a young name, our passion for exquisite jewelry and unwavering
+                commitment to quality have quickly set us apart.Every piece we offer is carefully 
+                selected from trusted artisans and renowned suppliers, ensuring our customers
+                enjoy the same brilliance and craftsmanship that define generations of fine jewelry.
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 Each piece in our collection tells a story—of love, celebration, achievement, 
@@ -76,12 +82,12 @@ const About: React.FC = () => {
               {
                 icon: Gem,
                 title: 'Exceptional Quality',
-                description: 'We source only the finest materials and employ traditional techniques passed down through generations of master craftsmen.'
+                description: 'We source only the finest materials and every accessory—though cute and crafted or selected with care. We partner with trusted suppliers and carefully inspect each piece so you can enjoy lasting shine, perfect finishes, and comfortable wear. craftsmen.'
               },
               {
                 icon: Heart,
-                title: 'Passionate Craftsmanship',
-                description: 'Every piece is created with love and attention to detail, ensuring it meets our exacting standards of beauty and durability.'
+                title: 'Affordability with Style',
+                description: 'Every piece is created with love and attention to Cute, trendy, and accessible jewelry for everyone without compromising on quality., ensuring it meets our exacting standards of beauty and durability.'
               },
               {
                 icon: Users,
@@ -90,8 +96,8 @@ const About: React.FC = () => {
               },
               {
                 icon: Award,
-                title: 'Timeless Design',
-                description: 'Our designs transcend trends, creating pieces that remain as beautiful and relevant today as they will be for generations to come.'
+                title: 'Trust & Transparency',
+                description: 'Our designs transcend trends, creating pieces that remaiHonest sourcHonest sourcing and clear product information—no hidden surprises.ing and clear product information—no hidden surprises.'
               }
             ].map((value, index) => (
               <motion.div
@@ -126,30 +132,30 @@ const About: React.FC = () => {
             </div>
             <div className="space-y-6 order-1 lg:order-2">
               <h2 className="text-3xl md:text-4xl font-bold">
-                Master <span className="text-luxury">Craftsmanship</span>
+                What we <span className="text-luxury">Bring to You</span>
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Our workshop is where tradition meets innovation. Each piece is meticulously 
-                crafted by skilled artisans who have dedicated their lives to the art of 
-                jewelry making. From hand-selecting gemstones to the final polish, every 
-                step is executed with precision and care.
+                At Nyrazari, we bring you cute, accessories that add sparkle to everyday life.
+                 Every piece is carefully selected for quality, charm, and comfort, letting you express
+                  your style with joy and confidence. Tiny treasures, big smiles—that’s what 
+                  we promise with every accessory and jewls.
               </p>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                  <p className="text-muted-foreground">Hand-selected precious metals and gemstones</p>
+                  <p className="text-muted-foreground">Cute Accessories – Fun, charming pieces to brighten everyday outfits.</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                  <p className="text-muted-foreground">Traditional techniques refined over decades</p>
+                  <p className="text-muted-foreground">Exceptional Quality – Carefully selected or crafted for lasting shine and comfort.</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                  <p className="text-muted-foreground">Rigorous quality control at every stage</p>
+                  <p className="text-muted-foreground">Joyful Style – Accessories that let you express your personality and bring smiles.</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                  <p className="text-muted-foreground">Lifetime warranty on all pieces</p>
+                  <p className="text-muted-foreground">Affordable Elegance – Trendy, delightful pieces that won’t break the bank.</p>
                 </div>
               </div>
             </div>
@@ -174,20 +180,21 @@ const About: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              {
-                name: 'Alessandro Nyrazari',
-                role: 'Founder & Master Jeweler',
-                description: 'With over 40 years of experience, Alessandro brings Old World craftsmanship to modern luxury jewelry.'
+             {
+                name: '',
+                role: '',
+                description: ''
+                
               },
               {
-                name: 'Isabella Martinez',
-                role: 'Lead Designer',
-                description: 'Isabella creates timeless designs that capture the essence of elegance and sophistication.'
+                name: 'Anupama Nipin',
+                role: 'Founder',
+                description: 'started Nyrazari two years ago with a love for cute,accessories and a passion for helping people express their style.'
               },
               {
-                name: 'James Chen',
-                role: 'Gemologist',
-                description: 'James ensures every gemstone meets our exacting standards for brilliance, clarity, and color.'
+                name: '',
+                role: '',
+                description: ''
               }
             ].map((member, index) => (
               <motion.div

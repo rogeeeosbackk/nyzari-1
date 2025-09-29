@@ -207,12 +207,12 @@ const ProductDetail: React.FC = () => {
                   <span className="text-sm">Free Shipping</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Shield className="h-5 w-5 text-primary" />
-                  <span className="text-sm">Lifetime Warranty</span>
+                  
+                  <span className="text-sm"></span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RotateCcw className="h-5 w-5 text-primary" />
-                  <span className="text-sm">30-Day Returns</span>
+                  
+                  <span className="text-sm"></span>
                 </div>
               </div>
             </div>

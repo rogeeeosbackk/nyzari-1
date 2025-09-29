@@ -43,7 +43,7 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <img 
-              src="/src/assets/nyrazari-logo.png" 
+              src="/assets/nyrazari-logo.png" 
               alt="Nyrazari Logo" 
               className="h-12 w-12 object-contain"
             />

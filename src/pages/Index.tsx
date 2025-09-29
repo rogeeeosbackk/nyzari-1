@@ -152,17 +152,17 @@ const Index = () => {
               {
                 icon: Star,
                 title: "Premium Quality",
-                description: "Each piece is crafted with the finest materials and attention to detail"
+                description: "ccessories that add charm and give an elegant look to everyday life."
               },
               {
                 icon: Star,
-                title: "Expert Craftsmanship", 
-                description: "Our skilled artisans bring decades of jewelry-making expertise"
+                title: "Sparkle That Lasts.", 
+                description: "– Quality pieces you can trust and enjoy"
               },
               {
                 icon: Star,
-                title: "Lifetime Warranty",
-                description: "We stand behind our quality with comprehensive lifetime coverage"
+                title: "Affordable Style",
+                description: "Trendy, delightful accessories without breaking the bank"
               }
             ].map((feature, index) => (
               <motion.div
