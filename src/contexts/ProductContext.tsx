@@ -37,8 +37,8 @@ const initialProducts: Product[] = [
     price: 799,
     images: [
       '/assets/stone-neck-blue.jpg',
-      '/assets/stone-neck-green.jpg',
-      '/assets/stone-neck-red.jpg',
+      '/assets/stone-neck-black.jpg',
+      '/assets/stone-neck-blue.jpg',
     ],
     category: 'necklaces',
     description: 'Classic blue necklace with cute Stones',

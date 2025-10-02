@@ -25,7 +25,7 @@ const GOOGLE_FORM_ENTRY_IDS = {
 // Extend CartItem with id
 export interface CartItemWithId extends CartItem {
   id: string;
-  image?: string;
+  images?: string[];
   category?: string;
 }
 
@@ -138,9 +138,9 @@ const Cart: React.FC = () => {
               >
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="w-full md:w-32 h-48 md:h-32 rounded-lg overflow-hidden bg-gray-50">
-                    {item.image && (
+                    {item.images && (
                       <img
-                        src={item.image[0]}
+                        src={item.images[0]}
                         alt={item.name}
                         className="w-full h-full object-cover"
                       />

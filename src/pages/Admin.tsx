@@ -91,7 +91,7 @@ const Admin: React.FC = () => {
       category: formData.category,
       description: formData.description,
       stock: parseInt(formData.stock) || 0,
-      image: formData.images.map(img => img || '/assets/placeholder.jpg'),
+      images: formData.images.map(img => img || '/assets/placeholder.jpg'),
     };
 
     if (editingProduct) {
@@ -114,9 +114,9 @@ const Admin: React.FC = () => {
       category: product.category,
       description: product.description,
       stock: product.stock.toString(),
-      images: product.image,
+      images: product.images,
     });
-    setImagePreviews(product.image);
+    setImagePreviews(product.images);
     setIsDialogOpen(true);
   };
 
@@ -232,7 +232,7 @@ const Admin: React.FC = () => {
                 {products.map(product => (
                   <tr key={product.id} className="border-b last:border-0">
                     <td className="p-4 flex items-center space-x-3">
-                      <img src={product.image[0]} alt={product.name} className="w-12 h-12 rounded-lg object-cover bg-muted" />
+                      <img src={product.images[0]} alt={product.name} className="w-12 h-12 rounded-lg object-cover bg-muted" />
                       <div>
                         <div className="font-medium">{product.name}</div>
                         <div className="text-sm text-muted-foreground line-clamp-1">{product.description}</div>

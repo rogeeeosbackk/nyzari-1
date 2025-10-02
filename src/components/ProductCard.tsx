@@ -44,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
         <div className="relative overflow-hidden rounded-lg mb-4">
           {/* Main Image */}
           <img
-            src={product.image[activeImage]}
+            src={product.images[activeImage]}
             alt={product.name}
             onError={handleImageError}
             className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
@@ -83,9 +83,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
         </div>
 
         {/* Thumbnail selector */}
-        {product.image.length > 1 && (
+        {product.images.length > 1 && (
           <div className="flex justify-center space-x-2 mb-3">
-            {product.image.map((img, idx) => (
+            {product.images.map((img, idx) => (
               <button
                 key={idx}
                 onClick={(e) => {

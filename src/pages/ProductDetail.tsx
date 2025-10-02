@@ -47,7 +47,7 @@ const ProductDetail: React.FC = () => {
   };
 
   // Use product.images array
-  const productImages = product.image.length > 0 ? product.image : ['/assets/placeholder.jpg'];
+  const productImages = product.images.length > 0 ? product.images : ['/assets/placeholder.jpg'];
 
   return (
     <div className="min-h-screen py-8">
