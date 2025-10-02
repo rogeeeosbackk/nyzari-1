@@ -130,7 +130,7 @@ const Index = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Why Choose <span className="text-luxury">Nyrazari</span>
+              Why Choose <span className="text-luxury">NyraZari</span>
             </h2>
           </motion.div>
 

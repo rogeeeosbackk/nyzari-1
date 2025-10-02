@@ -1,3 +1,4 @@
+// src/contexts/ProductContext.tsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product } from './CartContext';
 
@@ -14,24 +15,32 @@ interface ProductContextType {
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
-// ✅ All image files must exist inside /public/assets (case-sensitive!)
+// ✅ Initial products with 3 images each
 const initialProducts: Product[] = [
   {
     id: '1',
     name: 'Silver Antique Set',
     price: 2899,
     offerPrice: 2299,
-    image: '/assets/silver-antique-set1.jpg',
+    images: [
+      '/assets/silver-antique-set1.jpg',
+      '/assets/silver-antique-set2.jpg',
+      '/assets/silver-antique-set3.jpg',
+    ],
     category: 'necklaces',
-    description: 'Exquisite silver eternity featuring brilliant-cut jewls',
+    description: 'Exquisite silver eternity featuring brilliant-cut jewels',
     stock: 5,
   },
   {
     id: '2',
     name: 'Stone Necklace',
     price: 799,
-    image: '/assets/stone-neck-blue.jpg',
-    category: 'rings',
+    images: [
+      '/assets/stone-neck-blue.jpg',
+      '/assets/stone-neck-green.jpg',
+      '/assets/stone-neck-red.jpg',
+    ],
+    category: 'necklaces',
     description: 'Classic blue necklace with cute Stones',
     stock: 15,
   },
@@ -40,186 +49,26 @@ const initialProducts: Product[] = [
     name: 'Korean Stud',
     price: 3299,
     offerPrice: 2799,
-    image: '/assets/korean-stud1.jpg',
+    images: [
+      '/assets/korean-stud1.jpg',
+      '/assets/korean-stud2.jpg',
+      '/assets/korean-stud3.jpg',
+    ],
     category: 'earrings',
     description: 'Art deco inspired ruby ring with diamond accents',
     stock: 3,
   },
-  {
-    id: '4',
-    name: 'Platinum Solitaire',
-    price: 4599,
-    image: '/assets/ring-rose-gold-band.jpg',
-    category: 'rings',
-    description: 'Classic platinum solitaire engagement ring',
-    stock: 7,
-  },
-  {
-    id: '5',
-    name: 'Moonstone Cocktail Ring',
-    price: 1299,
-    offerPrice: 999,
-    image: '/assets/ring-diamond-eternity.jpg',
-    category: 'rings',
-    description: 'Statement moonstone ring in yellow gold setting',
-    stock: 9,
-  },
-  {
-    id: '6',
-    name: 'Tanzanite Cluster Ring',
-    price: 2299,
-    image: '/assets/ring-rose-gold-band.jpg',
-    category: 'rings',
-    description: 'Unique tanzanite cluster design in white gold',
-    stock: 4,
-  },
-  {
-    id: '7',
-    name: 'Opal Anniversary Band',
-    price: 1599,
-    offerPrice: 1299,
-    image: '/assets/ring-diamond-eternity.jpg',
-    category: 'rings',
-    description: 'Delicate opal anniversary band with milgrain details',
-    stock: 8,
-  },
-  {
-    id: '8',
-    name: 'Black Diamond Ring',
-    price: 1899,
-    image: '/assets/ring-rose-gold-band.jpg',
-    category: 'rings',
-    description: 'Modern black diamond ring in rose gold',
-    stock: 6,
-  },
-  {
-    id: '9',
-    name: 'Emerald Cut Aquamarine Ring',
-    price: 2799,
-    offerPrice: 2399,
-    image: '/assets/ring-diamond-eternity.jpg',
-    category: 'rings',
-    description: 'Stunning emerald cut aquamarine with diamond halo',
-    stock: 5,
-  },
-  {
-    id: '10',
-    name: 'Vintage Inspired Sapphire Ring',
-    price: 3499,
-    image: '/assets/ring-rose-gold-band.jpg',
-    category: 'rings',
-    description: 'Blue sapphire ring with vintage filigree work',
-    stock: 3,
-  },
-
-  // Necklaces
-  {
-    id: '11',
-    name: 'Gold Chain Necklace',
-    price: 1599,
-    offerPrice: 1299,
-    image: '/assets/necklace-gold-chain.jpg',
-    category: 'necklaces',
-    description: 'Luxurious 14k gold chain necklace with adjustable length',
-    stock: 8,
-  },
-  {
-    id: '12',
-    name: 'Emerald Pendant Necklace',
-    price: 2199,
-    image: '/assets/necklace-emerald-pendant.jpg',
-    category: 'necklaces',
-    description: 'Stunning emerald pendant on delicate gold chain',
-    stock: 4,
-  },
-  {
-    id: '13',
-    name: 'Diamond Solitaire Pendant',
-    price: 1899,
-    offerPrice: 1599,
-    image: '/assets/necklace-gold-chain.jpg',
-    category: 'necklaces',
-    description: 'Classic diamond solitaire pendant in white gold',
-    stock: 12,
-  },
-  {
-    id: '14',
-    name: 'Pearl Strand Necklace',
-    price: 899,
-    image: '/assets/necklace-emerald-pendant.jpg',
-    category: 'necklaces',
-    description: 'Cultured pearl strand with gold clasp',
-    stock: 15,
-  },
-  {
-    id: '15',
-    name: 'Layered Gold Chains',
-    price: 699,
-    offerPrice: 549,
-    image: '/assets/necklace-gold-chain.jpg',
-    category: 'necklaces',
-    description: 'Trendy layered gold chain set',
-    stock: 20,
-  },
-  {
-    id: '16',
-    name: 'Ruby Heart Pendant',
-    price: 1499,
-    image: '/assets/necklace-emerald-pendant.jpg',
-    category: 'necklaces',
-    description: 'Romantic ruby heart pendant with diamond accent',
-    stock: 7,
-  },
-  {
-    id: '17',
-    name: 'Sapphire Bar Necklace',
-    price: 1299,
-    offerPrice: 1099,
-    image: '/assets/necklace-gold-chain.jpg',
-    category: 'necklaces',
-    description: 'Modern sapphire bar pendant on delicate chain',
-    stock: 10,
-  },
-  {
-    id: '18',
-    name: 'Vintage Locket',
-    price: 799,
-    image: '/assets/necklace-emerald-pendant.jpg',
-    category: 'necklaces',
-    description: 'Antique-inspired gold locket with engraving',
-    stock: 6,
-  },
-  {
-    id: '19',
-    name: 'Tennis Diamond Necklace',
-    price: 3999,
-    offerPrice: 3399,
-    image: '/assets/necklace-gold-chain.jpg',
-    category: 'necklaces',
-    description: 'Luxurious tennis diamond necklace',
-    stock: 2,
-  },
-  {
-    id: '20',
-    name: 'Turquoise Statement Necklace',
-    price: 1199,
-    image: '/assets/necklace-emerald-pendant.jpg',
-    category: 'necklaces',
-    description: 'Bold turquoise statement piece in silver',
-    stock: 8,
-  },
+  // Add more products here as needed
 ];
 
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [products, setProducts] = useState<Product[]>(() => {
+    // Try loading from localStorage first
+    const stored = localStorage.getItem('nyrazari-products');
+    return stored ? JSON.parse(stored) : initialProducts;
+  });
 
-  // 🔥 Always clear localStorage on reload to ensure code edits take effect
-  useEffect(() => {
-    localStorage.removeItem('nyrazari-products');
-    setProducts(initialProducts);
-  }, []);
-
-  // Save current products for runtime updates (add/update/delete)
+  // Persist products to localStorage on change
   useEffect(() => {
     localStorage.setItem('nyrazari-products', JSON.stringify(products));
   }, [products]);

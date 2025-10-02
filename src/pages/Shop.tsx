@@ -184,7 +184,7 @@ const Shop: React.FC = () => {
                       <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
                       <p className="text-muted-foreground mb-4">{product.description}</p>
                       <div className="text-2xl font-bold text-primary">
-                        ${product.price.toLocaleString()}
+                        ₹{product.price.toLocaleString()}
                       </div>
                     </div>
                     <Button className="btn-luxury">Add to Cart</Button>

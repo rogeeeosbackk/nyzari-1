@@ -34,18 +34,20 @@ const ProductDetail: React.FC = () => {
   }
 
   const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      addToCart(product);
-    }
+    for (let i = 0; i < quantity; i++) addToCart(product);
     toast({
-      title: "Added to cart!",
+      title: 'Added to cart!',
       description: `${quantity} ${product.name}${quantity > 1 ? 's' : ''} added to your cart.`,
       duration: 2000,
     });
   };
 
-  // Mock additional images for gallery
-  const productImages = [product.image, product.image, product.image];
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = '/assets/placeholder.jpg';
+  };
+
+  // Use product.images array
+  const productImages = product.image.length > 0 ? product.image : ['/assets/placeholder.jpg'];
 
   return (
     <div className="min-h-screen py-8">
@@ -73,33 +75,34 @@ const ProductDetail: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            {/* Main Image */}
             <div className="aspect-square rounded-lg overflow-hidden bg-gray-50">
               <img
                 src={productImages[selectedImage]}
                 alt={product.name}
+                onError={handleImageError}
                 className="w-full h-full object-cover"
               />
             </div>
-
-            {/* Image Thumbnails */}
-            <div className="grid grid-cols-3 gap-4">
-              {productImages.map((image, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedImage(index)}
-                  className={`aspect-square rounded-lg overflow-hidden border-2 transition-colors ${
-                    selectedImage === index ? 'border-primary' : 'border-border'
-                  }`}
-                >
-                  <img
-                    src={image}
-                    alt={`${product.name} ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                </button>
-              ))}
-            </div>
+            {productImages.length > 1 && (
+              <div className="grid grid-cols-3 gap-4">
+                {productImages.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImage(index)}
+                    className={`aspect-square rounded-lg overflow-hidden border-2 transition-colors ${
+                      selectedImage === index ? 'border-primary' : 'border-border'
+                    }`}
+                  >
+                    <img
+                      src={image}
+                      alt={`${product.name} ${index + 1}`}
+                      onError={handleImageError}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </motion.div>
 
           {/* Product Details */}
@@ -109,7 +112,6 @@ const ProductDetail: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {/* Category & Stock */}
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground uppercase tracking-wide">
                 {product.category}
@@ -121,10 +123,8 @@ const ProductDetail: React.FC = () => {
               )}
             </div>
 
-            {/* Product Name */}
             <h1 className="text-3xl md:text-4xl font-bold">{product.name}</h1>
 
-            {/* Rating */}
             <div className="flex items-center space-x-2">
               <div className="flex items-center">
                 {[...Array(5)].map((_, i) => (
@@ -134,17 +134,27 @@ const ProductDetail: React.FC = () => {
               <span className="text-sm text-muted-foreground">(42 reviews)</span>
             </div>
 
-            {/* Price */}
-            <div className="text-3xl font-bold text-primary">
-              ${product.price.toLocaleString()}
+            {/* Price with offer */}
+            <div className="flex items-center space-x-3">
+              {product.offerPrice ? (
+                <>
+                  <span className="text-3xl font-bold text-primary">
+                    ₹{product.offerPrice.toLocaleString()}
+                  </span>
+                  <span className="text-lg text-muted-foreground line-through">
+                    ₹{product.price.toLocaleString()}
+                  </span>
+                </>
+              ) : (
+                <span className="text-3xl font-bold text-primary">
+                  ₹{product.price.toLocaleString()}
+                </span>
+              )}
             </div>
 
-            {/* Description */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">Description</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                {product.description}
-              </p>
+              <p className="text-muted-foreground leading-relaxed">{product.description}</p>
             </div>
 
             {/* Quantity Selector */}
@@ -170,15 +180,13 @@ const ProductDetail: React.FC = () => {
                     +
                   </Button>
                 </div>
-                <span className="text-sm text-muted-foreground">
-                  {product.stock} available
-                </span>
+                <span className="text-sm text-muted-foreground">{product.stock} available</span>
               </div>
             </div>
 
             {/* Action Buttons */}
             <div className="space-y-4">
-              <Button 
+              <Button
                 className="w-full btn-luxury text-lg py-6"
                 onClick={handleAddToCart}
                 disabled={product.stock === 0}
@@ -186,7 +194,6 @@ const ProductDetail: React.FC = () => {
                 <ShoppingCart className="mr-2 h-5 w-5" />
                 {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
               </Button>
-              
               <div className="grid grid-cols-2 gap-4">
                 <Button variant="outline" className="btn-outline-luxury">
                   <Heart className="mr-2 h-4 w-4" />
@@ -207,20 +214,17 @@ const ProductDetail: React.FC = () => {
                   <span className="text-sm">Free Shipping</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  
-                  <span className="text-sm"></span>
+                  <Shield className="h-5 w-5 text-primary" />
+                  <span className="text-sm">Secure Payments</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  
-                  <span className="text-sm"></span>
+                  <RotateCcw className="h-5 w-5 text-primary" />
+                  <span className="text-sm">Easy Returns</span>
                 </div>
               </div>
             </div>
           </motion.div>
         </div>
-
-        {/* Related Products */}
-        {/* This would show products from the same category - simplified for now */}
       </div>
     </div>
   );

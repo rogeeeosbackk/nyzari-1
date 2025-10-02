@@ -99,8 +99,8 @@ const Contact: React.FC = () => {
                   <Phone className="h-6 w-6 text-primary mt-1" />
                   <div>
                     <h3 className="font-medium mb-1">Phone</h3>
-                    <p className="text-muted-foreground">+91 1234567890</p>
-                    <p className="text-muted-foreground">+91 1234567890</p>
+                    <p className="text-muted-foreground">+91 6282718910</p>
+                    <p className="text-muted-foreground"></p>
                   </div>
                 </div>
 
@@ -109,9 +109,9 @@ const Contact: React.FC = () => {
                   <div>
                     <h3 className="font-medium mb-1">Address</h3>
                     <p className="text-muted-foreground">
-                      Kannur<br />
                       Kerala<br />
-                      India
+                      India<br />
+                      
                     </p>
                   </div>
                 </div>
@@ -130,13 +130,7 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* Map Placeholder */}
-            <div className="card-luxury p-8">
-              <h3 className="text-lg font-semibold mb-4">Visit Our Showroom</h3>
-              <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                <p className="text-muted-foreground">Interactive Map Coming Soon</p>
-              </div>
-            </div>
+            
           </motion.div>
 
           {/* Contact Form */}

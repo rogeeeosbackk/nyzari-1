@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="text-2xl font-bold text-luxury">Nyrazari</div>
+            <div className="text-2xl font-bold text-luxury">NyraZari</div>
             <p className="text-gray-300 leading-relaxed">
               Crafting exquisite jewelry pieces that celebrate life's precious moments
               with unparalleled elegance and artistry.
@@ -98,7 +98,7 @@ const Footer: React.FC = () => {
               </div>
               <div className="flex items-center space-x-2 text-gray-300">
                 <Phone className="h-4 w-4" />
-                <span className="text-sm">+91 1234567890</span>
+                <span className="text-sm">+91 6282718910</span>
               </div>
               <div className="flex items-center space-x-2 text-gray-300">
                 <MapPin className="h-4 w-4" />
@@ -130,7 +130,9 @@ const Footer: React.FC = () => {
           viewport={{ once: true }}
         >
           <div className="text-gray-300 text-sm">
-            © {currentYear} Nyrazari. All rights reserved.
+            © {currentYear} NyraZari. All rights reserved.
+            Powered by © {currentYear} PixelStack Solutions.
+
           </div>
           <div className="flex space-x-6 text-sm text-gray-300">
             <Link to="/privacy" className="hover:text-primary transition-colors">

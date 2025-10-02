@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Eye } from 'lucide-react';
 import { Product, useCart } from '../contexts/CartContext';
@@ -14,16 +14,21 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
   const { addToCart } = useCart();
   const { toast } = useToast();
+  const [activeImage, setActiveImage] = useState(0); // For switching images
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(product);
     toast({
-      title: "Added to cart!",
+      title: 'Added to cart!',
       description: `${product.name} has been added to your cart.`,
       duration: 2000,
     });
+  };
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = '/assets/placeholder.jpg';
   };
 
   return (
@@ -37,12 +42,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
     >
       <Link to={`/product/${product.id}`}>
         <div className="relative overflow-hidden rounded-lg mb-4">
+          {/* Main Image */}
           <img
-            src={product.image}
+            src={product.image[activeImage]}
             alt={product.name}
+            onError={handleImageError}
             className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
           />
-          
+
           {/* Overlay on hover */}
           <motion.div
             className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -64,7 +71,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
               </span>
             </div>
           )}
-          
+
           {/* Sale badge */}
           {product.offerPrice && (
             <div className="absolute top-3 right-3">
@@ -74,6 +81,31 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
             </div>
           )}
         </div>
+
+        {/* Thumbnail selector */}
+        {product.image.length > 1 && (
+          <div className="flex justify-center space-x-2 mb-3">
+            {product.image.map((img, idx) => (
+              <button
+                key={idx}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveImage(idx);
+                }}
+                className={`w-12 h-12 rounded overflow-hidden border transition-colors ${
+                  idx === activeImage ? 'border-primary' : 'border-gray-300'
+                }`}
+              >
+                <img
+                  src={img}
+                  alt={`${product.name} ${idx + 1}`}
+                  className="w-full h-full object-cover"
+                  onError={handleImageError}
+                />
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="space-y-3">
           {/* Category */}
@@ -100,21 +132,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
                     ${product.offerPrice.toLocaleString()}
                   </div>
                   <div className="text-sm text-muted-foreground line-through">
-                    ${product.price.toLocaleString()}
+                    ₹{product.price.toLocaleString()}
                   </div>
                 </>
               ) : (
                 <div className="text-2xl font-bold text-primary">
-                  ${product.price.toLocaleString()}
+                  ₹{product.price.toLocaleString()}
                 </div>
               )}
             </div>
-            
-            <Button
-              onClick={handleAddToCart}
-              className="btn-luxury"
-              size="sm"
-            >
+
+            <Button onClick={handleAddToCart} className="btn-luxury" size="sm">
               <ShoppingCart className="h-4 w-4 mr-2" />
               Add to Cart
             </Button>

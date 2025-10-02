@@ -140,7 +140,7 @@ const Cart: React.FC = () => {
                   <div className="w-full md:w-32 h-48 md:h-32 rounded-lg overflow-hidden bg-gray-50">
                     {item.image && (
                       <img
-                        src={item.image}
+                        src={item.image[0]}
                         alt={item.name}
                         className="w-full h-full object-cover"
                       />
@@ -189,11 +189,11 @@ const Cart: React.FC = () => {
 
                       <div className="text-right">
                         <div className="font-semibold text-lg">
-                          ${(item.price * item.quantity).toLocaleString()}
+                          ₹{(item.price * item.quantity).toLocaleString()}
                         </div>
                         {item.quantity > 1 && (
                           <div className="text-sm text-muted-foreground">
-                            ${item.price.toLocaleString()} each
+                            ₹{item.price.toLocaleString()} each
                           </div>
                         )}
                       </div>
@@ -217,21 +217,21 @@ const Cart: React.FC = () => {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between">
                   <span>Subtotal ({itemCount} items)</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>₹{total.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping</span>
                   <span className="text-primary font-medium">Free</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Tax</span>
-                  <span>${(total * 0.08).toFixed(2)}</span>
+                  <span>GST</span>
+                   <span className="text-primary font-medium">Included</span>
                 </div>
                 <div className="border-t pt-4">
                   <div className="flex justify-between text-lg font-semibold">
                     <span>Total</span>
                     <span className="text-primary">
-                      ${(total * 1.08).toFixed(2)}
+                      ₹{(total ).toFixed(2)}
                     </span>
                   </div>
                 </div>
